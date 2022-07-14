@@ -1,8 +1,8 @@
 require("dotenv").config();
 
 const puppeteer = require("puppeteer");
-const devices = puppeteer.devices;
-const iPad = devices["iPad"];
+// const devices = puppeteer.devices;
+// const iPad = devices["iPad"];
 
 // Configuration des options chrome
 
@@ -15,7 +15,7 @@ const chromeOptions = {
 const search = `https://www.instagram.com/explore/tags/`;
 
 // Les tags que nous allons chercher
-const tags = ["Naruto", "Sasuke", "Kirito"];
+const tags = ["Naruto"];
 
 (async () => {
   // Les variables environementales
@@ -26,7 +26,7 @@ const tags = ["Naruto", "Sasuke", "Kirito"];
   // Initialisation du navigateur
   const browser = await puppeteer.launch(chromeOptions);
   const page = await browser.newPage();
-  await page.emulate(iPad);
+  // await page.emulate(iPad);
   // Navigation vers la page de connexion
   await page.goto(url, { waitUntil: "networkidle2" });
   await page.waitForTimeout(5000);
