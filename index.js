@@ -21,7 +21,7 @@ const tags = ["Naruto", "Sasuke", "Kirito"];
   // Les variables environementales
   const email = process.env.EMAIL;
   const pass = process.env.PASS;
-  const url = process.env.URL;
+  const url = "https://instagram.com/accounts/login";
 
   // Initialisation du navigateur
   const browser = await puppeteer.launch(chromeOptions);
