@@ -75,6 +75,6 @@ const tags = ["Damso", "Sasuke", "Kirito"];
       }
     }
   }
-  // await page.screenshot({ path: "example.png" });
+  await page.screenshot({ path: "example.png" });
   await browser.close();
 })();
