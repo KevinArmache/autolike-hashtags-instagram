@@ -1,0 +1,25 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "description": "Puppeteer est une bibliothèque Node qui fournit une API de haut niveau la plupart des choses que vous pouvez faire manuellement dans le navigateur peuvent être faites à l'aide de Puppeteer !",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.19",
+    "puppeteer": "^15.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinArmache/puppeteer-login-instagram.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KevinArmache/puppeteer-login-instagram/issues"
+  },
+  "homepage": "https://github.com/KevinArmache/puppeteer-login-instagram#readme"
+}
