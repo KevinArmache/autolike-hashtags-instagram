@@ -1,9 +1,8 @@
 require("dotenv").config();
 
 const puppeteer = require("puppeteer");
-const select = require("puppeteer-select");
-const devices = puppeteer.devices;
-const iPad = devices["iPad"];
+// const devices = puppeteer.devices;
+// const iPad = devices["iPad"];
 
 // Configuration des options chrome
 
@@ -16,7 +15,7 @@ const chromeOptions = {
 const search = `https://www.instagram.com/explore/tags/`;
 
 // Les tags que nous allons chercher
-const tags = ["Damso", "Sasuke", "Kirito"];
+const tags = ["Naruto", "Sasuke", "Kirito"];
 
 (async () => {
   // Les variables environementales
@@ -27,7 +26,7 @@ const tags = ["Damso", "Sasuke", "Kirito"];
   // Initialisation du navigateur
   const browser = await puppeteer.launch(chromeOptions);
   const page = await browser.newPage();
-  await page.emulate(iPad);
+  // await page.emulate(iPad);
   // Navigation vers la page de connexion
   await page.goto(url, { waitUntil: "networkidle2" });
   await page.waitForTimeout(5000);
@@ -46,35 +45,40 @@ const tags = ["Damso", "Sasuke", "Kirito"];
   // Exécution sur la barre de recherche
   for (let i = 0; i < tags.length; i++) {
     // Recherche de notre tags
-    const link = search + tags[i];
+    let link = search + tags[i];
     await page.goto(link, { waitUntil: "networkidle2" });
-    await page.waitForTimeout(15000);
+    await page.waitForTimeout(10000);
 
     for (let y = 1; y <= 3; y++) {
       // Sélection des 3 premiers résultats récemment publiés
       let photos = "article > div:nth-child(3)";
-      let photo = photos + ` > div > div:nth-child(1) > div:nth-child(${y})`;
+      let photo =
+        photos + ` > div > div:nth-child(1) > div:nth-child(${y}) > a`;
+      await page.waitForTimeout(5000);
 
       // Click sur la premiere photo
       await page.click(photo);
-      await page.waitForTimeout(15000);
+      await page.waitForTimeout(10000);
 
       // Click sur le bouton "Like"
-      let heart = "section > span > button";
+      let heart = "section > span > button[type='button']";
       let redheart = "svg[aria-label='Je n’aime plus']";
-      let close = "div > div > div:nth-child(2) > div[role='button']";
+      let close = "div > div > div:nth-child(2) > div[role='button']  > div";
 
       if ((await page.$(redheart)) !== null) {
         // Si la photo est déjà likée, on ferme la fenêtre
         await page.click(close);
-        await page.waitForTimeout(5000);
+        await page.waitForTimeout(10000);
       } else {
         // Sinon, on clique sur le bouton "Like"
         await page.click(heart);
-        await page.waitForTimeout(5000);
+        await page.waitForTimeout(10000);
       }
     }
   }
-  await page.screenshot({ path: "example.png" });
+  // await page.screenshot({ path: "example.png" });
   await browser.close();
 })();
+
+// BUG : LE SCRIPT NE LIKE PAS LA DEUXIEME PHOTO IL LIKE DIRECTEMENT LA TROISIEME
+// DES PHOTOS RECEMEMENT PUBLIEES DU HASHTAGS
