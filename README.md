@@ -16,4 +16,4 @@ Voici quelques exemples :
 - Capturez une trace chronologique de votre site pour vous aider à diagnostiquer l
   es problèmes de performances.
 
-Nous allons voir comment like les trois premieres photos du resultat de la recherche d'un hastags sur Instagram
+Nous allons voir comment like les trois premieres photos du resultat de la recherche d'un hastags sur Instagram en utilisant puppeteer
