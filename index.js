@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const puppeteer = require("puppeteer");
+const select = require("puppeteer-select");
 const devices = puppeteer.devices;
 const iPad = devices["iPad"];
 
@@ -28,7 +29,7 @@ const tags = ["Damso", "Sasuke", "Kirito"];
   const page = await browser.newPage();
   await page.emulate(iPad);
   // Navigation vers la page de connexion
-  await page.goto(url, { waitUntil: "domcontentloaded" });
+  await page.goto(url, { waitUntil: "networkidle2" });
   await page.waitForTimeout(5000);
 
   // Remplissage du formulaire de connexion
@@ -42,15 +43,15 @@ const tags = ["Damso", "Sasuke", "Kirito"];
   await page.click('button[type="submit"]');
   await page.waitForTimeout(10000);
 
-  // Execution sur la barre de recherche
+  // Exécution sur la barre de recherche
   for (let i = 0; i < tags.length; i++) {
     // Recherche de notre tags
     const link = search + tags[i];
-    await page.goto(link, { waitUntil: "domcontentloaded" });
+    await page.goto(link, { waitUntil: "networkidle2" });
     await page.waitForTimeout(15000);
 
     for (let y = 1; y <= 3; y++) {
-      // Selection des 3 premiers résultat recemment publié
+      // Sélection des 3 premiers résultats récemment publiés
       let photos = "article > div:nth-child(3)";
       let photo = photos + ` > div > div:nth-child(1) > div:nth-child(${y})`;
 
@@ -60,15 +61,20 @@ const tags = ["Damso", "Sasuke", "Kirito"];
 
       // Click sur le bouton "Like"
       let heart = "section > span > button";
-      await page.click(heart);
-      await page.waitForTimeout(5000);
-      //  Fermer la fenetre de la photo
+      let redheart = "svg[aria-label='Je n’aime plus']";
       let close = "div > div > div:nth-child(2) > div[role='button']";
-      await page.click(close);
-      await page.waitForTimeout(5000);
+
+      if ((await page.$(redheart)) !== null) {
+        // Si la photo est déjà likée, on ferme la fenêtre
+        await page.click(close);
+        await page.waitForTimeout(5000);
+      } else {
+        // Sinon, on clique sur le bouton "Like"
+        await page.click(heart);
+        await page.waitForTimeout(5000);
+      }
     }
   }
-  await page.screenshot({ path: "example.png" });
-
+  // await page.screenshot({ path: "example.png" });
   await browser.close();
 })();
