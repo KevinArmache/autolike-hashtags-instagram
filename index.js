@@ -4,7 +4,7 @@ const puppeteer = require("puppeteer");
 
 // Nouveau processus de navigation avec un emulateur
 const devices = puppeteer.devices;
-const iPad = devices["iPhone 13"];
+const iPhone = devices["iPhone 13"];
 
 // Configuration des options chrome
 
@@ -28,7 +28,8 @@ const tags = ["Naruto", "Sasuke"];
   // Initialisation du navigateur
   const browser = await puppeteer.launch(chromeOptions);
   const page = await browser.newPage();
-  await page.emulate(iPad);
+  await page.setDefaultNavigationTimeout(0);
+  await page.emulate(iPhone);
   // Navigation vers la page de connexion
   await page.goto(url, { waitUntil: "networkidle2" });
   await page.waitForTimeout(5000);
