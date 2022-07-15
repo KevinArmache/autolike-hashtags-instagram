@@ -13,6 +13,11 @@ const chromeOptions = {
   defaultViewport: null,
 };
 
+//  pour eviter le bot de securite de login d'instagram
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // Le lien qui nous permettra de rechercher un tag
 const search = `https://www.instagram.com/explore/tags/`;
 
@@ -36,9 +41,13 @@ const tags = ["Naruto", "Sasuke"];
 
   // Remplissage du formulaire de connexion
   await page.click('input[type="text"]');
-  await page.type('input[type="text"]', email, { delay: 50 });
+  await page.type('input[type="text"]', email, {
+    delay: generateRandomNumber(100, 200),
+  });
   await page.click('input[type="password"]');
-  await page.type('input[type="password"]', pass, { delay: 50 });
+  await page.type('input[type="password"]', pass, {
+    delay: generateRandomNumber(100, 200),
+  });
 
   // Connexion vers la page d'acceuil
   await page.waitForTimeout(5000);
@@ -61,7 +70,7 @@ const tags = ["Naruto", "Sasuke"];
 
       // Click sur la premiere photo
       await page.click(photo);
-      await page.waitForSelector("div[aria-hidden='true']");
+      await page.waitForSelector("article[role='presentation']");
       await page.waitForTimeout(5000);
 
       // Click sur le bouton "Like"
