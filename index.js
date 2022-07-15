@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const puppeteer = require("puppeteer");
+
+// Nouveau processus de navigation avec un emulateur
 const devices = puppeteer.devices;
 const iPad = devices["iPhone 13"];
 
@@ -50,7 +52,6 @@ const tags = ["Naruto", "Sasuke"];
     await page.waitForTimeout(10000);
 
     // Sélection des 3 premiers résultats récemment publiés
-
     for (let y = 1; y <= 3; y++) {
       // Sélection des 3 premiers résultats récemment publiés
       let photos = "article > div:nth-child(3) > div";
@@ -85,6 +86,3 @@ const tags = ["Naruto", "Sasuke"];
   // await page.screenshot({ path: "example.png" });
   await browser.close();
 })();
-
-// BUG : LE SCRIPT NE LIKE PAS LA DEUXIEME PHOTO IL LIKE DIRECTEMENT LA TROISIEME
-// DES PHOTOS RECEMEMENT PUBLIEES DU HASHTAGS
